@@ -20,5 +20,7 @@ Route::get('/user/reg',[UserController::class,'registrationPage'])
 Route::post('/user/registration',[UserController::class,'doRegistration'])
     ->name('user.sign_up');
 Route::post('/user/login',[UserController::class,'doLogin'])->name('user.sign_in');
+Route::get('/user/logout',[UserController::class,'logout'])->name('user.sing_out');
 
-Route::resource('todo',TodoController::class);
+Route::resource('todo',TodoController::class)
+    ->middleware(['check.login','check.role:Admin,Developer']);

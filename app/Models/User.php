@@ -22,4 +22,8 @@ class User extends Model
     public function todos(){
         return $this->hasMany(Todo::class);
     }
+
+    public function roles(){
+        return $this->belongsToMany(Role::class)->withTimestamps();
+    }
 }

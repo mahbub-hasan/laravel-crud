@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegistrationRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -11,7 +12,8 @@ class UserController extends Controller
 {
     //
     public function registrationPage(){
-        return view('registration');
+        $roles = Role::all();
+        return view('registration',compact('roles'));
     }
 
     public function loginPage(){
@@ -28,7 +30,7 @@ class UserController extends Controller
             $gender = 'O';
         }
 
-        User::create([
+        $user = User::create([
             'first_name'=>$request->input('first_name'),
             'last_name'=>$request->input('last_name'),
             'username'=>$request->input('username'),
@@ -36,6 +38,8 @@ class UserController extends Controller
             'gender'=>$gender,
             'dob'=>$request->input('dob')
         ]);
+
+        $user->roles()->sync([$request->input('role')]);
 
         return redirect()->route('user.login');
     }
@@ -54,6 +58,11 @@ class UserController extends Controller
         $request->session()->put('user_id',$user->id);
 
         return redirect()->route('todo.index');
+    }
+
+    public function logout(){
+        session()->flash('user_id');
+        return redirect()->route('user.login');
     }
 
 }

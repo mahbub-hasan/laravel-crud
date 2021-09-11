@@ -3,9 +3,16 @@
 @section('content')
     <div class="flex justify-center items-center">
         <div class="w-4/5 mt-10 border bg-white shadow">
-            <div class="bg-gray-700 p-2 flex items-center space-x-5">
-                <span class="text-2xl text-white font-light uppercase">Todo List</span>
-                <a href="{{ route('todo.create') }}"><span class="material-icons text-white cursor-pointer">add_circle</span></a>
+            <div class="bg-gray-700 p-2 flex items-center justify-between">
+                <div class="flex justify-start items-center space-x-5">
+                    <span class="text-2xl text-white font-light uppercase">Todo List</span>
+                    @if((\App\Models\User::all()->where('id',session()->get('user_id'))->first())->roles()->where('name','Admin')->first())
+                        <a href="{{ route('todo.create') }}"><span class="material-icons text-white cursor-pointer">add_circle</span></a>
+                    @endif
+                </div>
+                <div>
+                    <a href="{{ route('user.sing_out') }}"><span class="material-icons text-white cursor-pointer">logout</span></a>
+                </div>
             </div>
             <div class="p-2">
                 <table class="overflow-scroll w-full">

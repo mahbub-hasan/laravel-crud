@@ -58,6 +58,16 @@
                         </div>
                     </div>
 
+                    <div class="w-full mt-3 mb-2">
+                        <label for="role" class="uppercase block">User Role</label>
+                        <select class="appearance-none rounded border shadow w-full focus:outline-none p-2" id="role" name="role">
+                            <option selected disabled>Choose a user role</option>
+                            @foreach($roles as $role)
+                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="flex justify-end items-center mt-3">
                         <button type="submit" class="appearance-none rounded border shadow bg-blue-700 text-blue-100 hover:bg-blue-900 hover:text-blue-100 p-2">
                             <span>Registration</span>
